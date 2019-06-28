@@ -101,7 +101,7 @@ spring:
       #      additional-paths: src/main/java/com/aoyox/basic
       exclude: application.yml
 
-#  security:
+#  security:   # 开启后http访问时需要用户名密码 否则访问接口时提示跨域问题
 #    basic:
 #      enabled: true
 #    user:
@@ -118,7 +118,7 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 8201
+  port: 8210
   connection-timeout: 5000ms
   servlet:
     context-path: /
