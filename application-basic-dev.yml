@@ -101,13 +101,13 @@ spring:
       #      additional-paths: src/main/java/com/aoyox/basic
       exclude: application.yml
 
-#  security:
-#    basic:
-#      enabled: true
-#    user:
-#      #这是config-server的用户名和密码
-#      name: root
-#      password: aoyox2019
+  security:
+    basic:
+      enabled: true
+    user:
+      #这是config-server的用户名和密码
+      name: root
+      password: aoyox2019
 
 
 logging:
