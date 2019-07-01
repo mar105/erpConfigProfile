@@ -1,0 +1,16 @@
+server:
+  port: 8210
+
+spring:
+  application:
+    name: openfeign
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8200/eureka/
+
+feign:
+  hystrix:
+    enabled: true
