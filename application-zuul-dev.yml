@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: zuul
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8200/eureka/
+
+zuul:
+  routes:
+    basic:
+      path: /**
+      serviceId: basic
