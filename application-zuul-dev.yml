@@ -12,4 +12,4 @@ zuul:
   routes:
     basic:
       path: /**
-      serviceId: basic
+      serviceId: openfeign
