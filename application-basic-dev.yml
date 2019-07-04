@@ -121,10 +121,10 @@ eureka:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8200/eureka/
 
-endpoints:
-  restart:
-    enabled: true
-  shutdown:
-    enabled: true
-  health:
-    sensitive: false
+#endpoints:
+#  restart:
+#    enabled: true
+#  shutdown:
+#    enabled: true
+#  health:
+#    sensitive: false
