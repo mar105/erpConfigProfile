@@ -6,10 +6,10 @@ spring:
     name: aoyox
     url: jdbc:mysql://localhost:3306/erp?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
     username: aoyox
-    #password: aoyox2019
-    privateKey: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAnBkQPqXCc8vwUw1PnhL3k0qM38HzOXJk+Qdlst5ybui46g+TDICngdoMTC15lDj0AaLnNsTbzeAvYrIVOnUctwIDAQABAkAatbcv4REq20SeEXMEK16tl14Pk5JYzBg2/GsMdj/Cdk3a09hsBA/PucJ/OGJIrFKjo3sGSGGTtTOCmRpa5bYRAiEA+BEUp7NkCX4WrmFkjTUMW9anv2+9YaGcgmBqxTdUcJ0CIQChFwj/tuFzDl2L028UzMiHjK9NuVh58U2Z7cO06ibQYwIhAJx7QdlL2zX1uN8FhsVgikxAiw7CsOcuaCkCIzgG4BgtAiAdQU+zEQV0ncFDaYyc3Gv2oggcN3LoAnizYcjPDE8sPQIgKa+k1qTYy+w75R5dd2XIOGsbu/HFjT1XaUChPUfvxmA=
+    password: aoyox2019
+    #    privateKey: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAnBkQPqXCc8vwUw1PnhL3k0qM38HzOXJk+Qdlst5ybui46g+TDICngdoMTC15lDj0AaLnNsTbzeAvYrIVOnUctwIDAQABAkAatbcv4REq20SeEXMEK16tl14Pk5JYzBg2/GsMdj/Cdk3a09hsBA/PucJ/OGJIrFKjo3sGSGGTtTOCmRpa5bYRAiEA+BEUp7NkCX4WrmFkjTUMW9anv2+9YaGcgmBqxTdUcJ0CIQChFwj/tuFzDl2L028UzMiHjK9NuVh58U2Z7cO06ibQYwIhAJx7QdlL2zX1uN8FhsVgikxAiw7CsOcuaCkCIzgG4BgtAiAdQU+zEQV0ncFDaYyc3Gv2oggcN3LoAnizYcjPDE8sPQIgKa+k1qTYy+w75R5dd2XIOGsbu/HFjT1XaUChPUfvxmA=
     publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJwZED6lwnPL8FMNT54S95NKjN/B8zlyZPkHZbLecm7ouOoPkwyAp4HaDEwteZQ49AGi5zbE283gL2KyFTp1HLcCAwEAAQ==
-    password: cBtDv596JbJIk4hApqGsDdWQizY3CIGvoGYtzSnHya35fPdal6c+QrtxCS8MaufMLL2+GmLWPvB0jjf/fk/QJA==
+    #    password: cBtDv596JbJIk4hApqGsDdWQizY3CIGvoGYtzSnHya35fPdal6c+QrtxCS8MaufMLL2+GmLWPvB0jjf/fk/QJA==
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -27,7 +27,7 @@ spring:
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
       maxOpenPreparedStatements: 20
-      connectionProperties: druid.stat.slowSqlMillis=200;druid.stat.logSlowSql=true;config.decrypt=true;config.decrypt.key=${spring.datasource.public-key}
+      connectionProperties: druid.stat.slowSqlMillis=200;druid.stat.logSlowSql=true;config.decrypt=false;config.decrypt.key=${spring.datasource.public-key}
       web-stat-filter:
         enabled: true
         url-pattern: /*
