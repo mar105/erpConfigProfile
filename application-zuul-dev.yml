@@ -3,7 +3,7 @@ spring:
     name: zuul
 eureka:
   instance:
-    hostname: localhost
+    hostname: 192.168.1.3
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8200/eureka/
