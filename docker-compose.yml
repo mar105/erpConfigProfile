@@ -23,6 +23,7 @@ services:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxConfigServer/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
       - aoyoxBack
+
   aoyoxZuul:
     image: mar105/ubuntu-tomcat9-jdk12:latest
     container_name: aoyoxZuul
@@ -33,6 +34,7 @@ services:
     - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxZuul/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
     - aoyoxConfigServer
+
   aoyoxOpenFeign:
     image: mar105/ubuntu-tomcat9-jdk12:latest
     container_name: aoyoxOpenFeign
@@ -41,5 +43,16 @@ services:
     restart: always
     volumes:
     - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxOpenFeign/build/libs:/mar105/apache-tomcat-9.0.21/webapps
+    depends_on:
+    - aoyoxConfigServer
+
+  aoyoxBasic:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: aoyoxBasic
+    ports:
+    - 8212:8080
+    restart: always
+    volumes:
+    - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBasic/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
     - aoyoxConfigServer
