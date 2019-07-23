@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  aoyoxBack:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: aoyoxBack
+    ports:
+      - 8200:8080
+    restart: always
+    volumes:
+      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBack/build/libs/:/mar105/apache-tomcat-9.0.21/webapps
+    healthcheck:
+      test: "/bin/netstat -anp | grep 8200"
+      interval: 10s
+      timeout: 3s
+      retries: 1
+  aoyoxConfigServer:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: aoyoxConfigServer
+    ports:
+      - 8201:8080
+    restart: always
+    volumes:
+      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxConfigServer/build/libs:/mar105/apache-tomcat-9.0.21/webapps
+    depends_on:
+      - aoyoxBack
