@@ -1,6 +1,6 @@
 spring:
   application:
-    name: basic
+    name: aoyoxBasic
 
   datasource:
     name: aoyox
