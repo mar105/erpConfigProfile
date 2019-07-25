@@ -13,6 +13,8 @@ services:
       interval: 10s
       timeout: 3s
       retries: 1
+    entrypoint: '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+
   aoyoxConfigServer:
     image: mar105/ubuntu-tomcat9-jdk12:latest
     container_name: aoyoxConfigServer
@@ -23,7 +25,8 @@ services:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxConfigServer/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
       - aoyoxBack
-
+    entrypoint:  /entrypoint.sh -d 192.168.1.103:8200 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+      
   aoyoxZuul:
     image: mar105/ubuntu-tomcat9-jdk12:latest
     container_name: aoyoxZuul
@@ -31,10 +34,11 @@ services:
     - 8202:8080
     restart: always
     volumes:
-    - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxZuul/build/libs:/mar105/apache-tomcat-9.0.21/webapps
+      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxZuul/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
-    - aoyoxConfigServer
-
+      - aoyoxConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.1.103:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+    
   aoyoxOpenFeign:
     image: mar105/ubuntu-tomcat9-jdk12:latest
     container_name: aoyoxOpenFeign
@@ -42,17 +46,19 @@ services:
     - 8210:8080
     restart: always
     volumes:
-    - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxOpenFeign/build/libs:/mar105/apache-tomcat-9.0.21/webapps
+      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxOpenFeign/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
-    - aoyoxConfigServer
+      - aoyoxConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.1.103:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
 
   aoyoxBasic:
     image: mar105/ubuntu-tomcat9-jdk12:latest
     container_name: aoyoxBasic
     ports:
-    - 8212:8080
+    - 8211:8080
     restart: always
     volumes:
-    - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBasic/build/libs:/mar105/apache-tomcat-9.0.21/webapps
+      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBasic/build/libs:/mar105/apache-tomcat-9.0.21/webapps
     depends_on:
-    - aoyoxConfigServer
+      - aoyoxConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.1.103:8210 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
