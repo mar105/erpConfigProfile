@@ -6,7 +6,7 @@ eureka:
     hostname: 192.168.1.103
   client:
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:8200/aoyoxBack/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8200/eureka/
 
 feign:
   hystrix:
