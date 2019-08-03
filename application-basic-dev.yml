@@ -1,6 +1,14 @@
 spring:
   application:
     name: aoyoxBasic
+  bus:
+    enabled: true
+    trace:
+      enabled: true
+
+
+  jmx:
+    enabled: false
 
   datasource:
     name: aoyox
@@ -94,6 +102,12 @@ spring:
         min-idle: 0
     #连接超时时间（毫秒）
     timeout: 10000ms
+
+  rabbitmq:
+    host: 192.168.1.103
+    port: 5672
+    username: admin
+    password: aoyox2019
 
   devtools:
     restart:
