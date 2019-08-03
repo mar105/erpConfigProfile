@@ -8,6 +8,7 @@ RUN mkdir -p /mar105/jdk-12.0.1
 ADD apache-tomcat-9.0.21 /mar105/apache-tomcat-9.0.21
 ADD jdk-12.0.1 /mar105/jdk-12.0.1
 ADD entrypoint.sh /entrypoint.sh
+RUN rm -rf /mar105/apache-tomcat-9.0.21/webapps/ROOT
 RUN chmod u+x entrypoint.sh
 ENV CATALINA_HOME /mar105/apache-tomcat-9.0.21
 ENV JAVA_HOME /mar105/jdk-12.0.1
