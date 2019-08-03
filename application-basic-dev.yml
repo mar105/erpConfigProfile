@@ -1,6 +1,8 @@
 spring:
   application:
     name: aoyoxBasic
+  main:
+    allow-bean-definition-overriding: true
 
   datasource:
     name: aoyox
