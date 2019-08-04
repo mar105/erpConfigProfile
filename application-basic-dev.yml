@@ -88,7 +88,7 @@ spring:
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）如果没有配置密码就不要写这个属性了
-    #    password: aoyox
+    password: aoyox
     #连接池
     lettuce:
       pool:
