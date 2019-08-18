@@ -37,4 +37,3 @@ zuul:
     basic:
       path: /**
       serviceId: aoyoxOpenFeign
-  retryable: false
