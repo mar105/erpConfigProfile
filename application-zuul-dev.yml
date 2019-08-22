@@ -37,3 +37,6 @@ zuul:
     basic:
       path: /**
       serviceId: aoyoxOpenFeign
+      # 不向后端服务传递的敏感头信息
+      sensitiveHeaders:
+      stripPrefix: false
