@@ -25,7 +25,7 @@ services:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxConfigServer/build/libs/aoyoxConfigServer.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     depends_on:
       - aoyoxBack
-    entrypoint:  /entrypoint.sh -d 192.168.1.103:8200 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+    entrypoint:  /entrypoint.sh -d 192.168.3.3:8200 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
       
   aoyoxZuul:
     image: mar105/ubuntu-tomcat9-jdk12:latest
@@ -37,7 +37,7 @@ services:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxZuul/build/libs/aoyoxZuul.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     depends_on:
       - aoyoxConfigServer
-    entrypoint: /entrypoint.sh -d 192.168.1.103:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
     
   aoyoxOpenFeign:
     image: mar105/ubuntu-tomcat9-jdk12:latest
@@ -49,7 +49,7 @@ services:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxOpenFeign/build/libs/aoyoxOpenFeign.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     depends_on:
       - aoyoxConfigServer
-    entrypoint: /entrypoint.sh -d 192.168.1.103:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
 
   aoyoxBasic:
     image: mar105/ubuntu-tomcat9-jdk12:latest
@@ -61,6 +61,6 @@ services:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBasic/build/libs/aoyoxBasic.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     depends_on:
       - aoyoxConfigServer
-    entrypoint: /entrypoint.sh -d 192.168.1.103:8210 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8210 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
 
 
