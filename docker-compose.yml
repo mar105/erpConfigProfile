@@ -6,6 +6,7 @@ services:
     ports:
       - 8200:8080
     restart: always
+    privileged: true
     volumes:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBack/build/libs/aoyoxBack.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     healthcheck:
@@ -21,6 +22,7 @@ services:
     ports:
       - 8201:8080
     restart: always
+    privileged: true
     volumes:
       - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxConfigServer/build/libs/aoyoxConfigServer.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     depends_on:
