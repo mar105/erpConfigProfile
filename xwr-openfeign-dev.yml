@@ -10,6 +10,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8200/eureka/
+    register-with-eureka: true
 
 feign:
   hystrix:
