@@ -33,7 +33,7 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes: # 配置路由
-        - id: xwrOpenFeign
+        - id: xwrOpenFeign1
           # 动态路由：从注册中心获取对应服务的实例
           uri: http://localhost:8212/
           # 当断言成功后，交给某一个微服务处理时使用的是转发
