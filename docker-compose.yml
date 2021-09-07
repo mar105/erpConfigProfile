@@ -1,68 +1,200 @@
 version: '3.3'
 services:
-  aoyoxBack:
+  xwrBack:
     image: mar105/ubuntu-tomcat9-jdk12:latest
-    container_name: aoyoxBack
+    container_name: xwrBack
     ports:
-      - 8200:8080
+      - 8200:8200
     restart: always
     privileged: true
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
-      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBack/build/libs/aoyoxBack.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrBack/build/libs/xwrBack.jar:/mar105/xwrBack.jar
+    #      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrBack/build/libs/xwrBack.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
     healthcheck:
       test: "/bin/netstat -anp | grep 8200"
       interval: 10s
       timeout: 3s
       retries: 1
-    entrypoint: '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+    entrypoint: 'java -jar -Dfile.encoding=utf-8 /mar105/xwrBack.jar'
+  #    entrypoint: '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
 
-  aoyoxConfigServer:
+  xwrConfigServer:
     image: mar105/ubuntu-tomcat9-jdk12:latest
-    container_name: aoyoxConfigServer
+    container_name: xwrConfigServer
     ports:
-      - 8201:8080
+      - 8201:8201
     restart: always
-    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
-      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxConfigServer/build/libs/aoyoxConfigServer.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrConfigServer/build/libs/xwrConfigServer.jar:/mar105/xwrConfigServer.jar
     depends_on:
-      - aoyoxBack
-    entrypoint:  /entrypoint.sh -d 192.168.3.3:8200 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
-      
-  aoyoxZuul:
-    image: mar105/ubuntu-tomcat9-jdk12:latest
-    container_name: aoyoxZuul
-    ports:
-      - 8202:8080
-    restart: always
-    volumes:
-      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxZuul/build/libs/aoyoxZuul.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
-    depends_on:
-      - aoyoxConfigServer
-    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
-    
-  aoyoxOpenFeign:
-    image: mar105/ubuntu-tomcat9-jdk12:latest
-    container_name: aoyoxOpenFeign
-    ports:
-      - 8210:8080
-    restart: always
-    volumes:
-      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxOpenFeign/build/libs/aoyoxOpenFeign.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
-    depends_on:
-      - aoyoxConfigServer
-    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+      - xwrBack
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8200 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrConfigServer.jar'
+      #    entrypoint: /entrypoint.sh -d 192.168.3.3:8200 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
 
-  aoyoxBasic:
+  xwrGateway:
     image: mar105/ubuntu-tomcat9-jdk12:latest
-    container_name: aoyoxBasic
+    container_name: xwrGateway
     ports:
-      - 8211:8080
+      - 8202:8202
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
-      - /Users/yanghenglin/Desktop/mar105/aoyox/aoyoxBasic/build/libs/aoyoxBasic.war:/mar105/apache-tomcat-9.0.21/webapps/ROOT.war
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrGateway/build/libs/xwrGateway.jar:/mar105/xwrGateway.jar
     depends_on:
-      - aoyoxConfigServer
-    entrypoint: /entrypoint.sh -d 192.168.3.3:8210 -c '/mar105/apache-tomcat-9.0.21/bin/catalina.sh run'
+      - xwrConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c 'java -jar /mar105/xwrGateway.jar'
 
+  xwrWebSocket:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrWebSocket
+    ports:
+      - 8203:8203
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrWebSocket/build/libs/xwrWebSocket.jar:/mar105/xwrWebSocket.jar
+    depends_on:
+      - xwrConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrWebSocket.jar'
+
+
+  xwrRocketMQ:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrRocketMQ
+    ports:
+      - 8204:8204
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrRocketMQ/build/libs/xwrRocketMQ.jar:/mar105/xwrRocketMQ.jar
+    depends_on:
+      - xwrWebSocket
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8203 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrRocketMQ.jar'
+
+  xwrMain:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrMain
+    ports:
+      - 8205:8205
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrMain/build/libs/xwrMain.jar:/mar105/xwrMain.jar
+    depends_on:
+      - xwrConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrMain.jar'
+
+  xwrOpenFeign:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrOpenFeign
+    ports:
+      - 8210:8210
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrOpenFeign/build/libs/xwrOpenFeign.jar:/mar105/xwrOpenFeign.jar
+    depends_on:
+      - xwrGateway
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8202 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrOpenFeign.jar'
+
+  xwrCommon:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrCommon
+    ports:
+      - 8211:8211
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrCommon/build/libs/xwrCommon.jar:/mar105/xwrCommon.jar
+    depends_on:
+      - xwrConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrCommon.jar'
+
+  xwrBasic:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrBasic
+    ports:
+      - 8212:8212
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrBasic/build/libs/xwrBasic.jar:/mar105/xwrBasic.jar
+    depends_on:
+      - xwrConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrBasic.jar'
+
+
+  xwrManage:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: xwrManage
+    ports:
+      - 8213:8213
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/xwrERP/xwrManage/build/libs/xwrManage.jar:/mar105/xwrManage.jar
+    depends_on:
+      - xwrConfigServer
+    entrypoint: /entrypoint.sh -d 192.168.3.3:8201 -c 'java -jar -Dfile.encoding=utf-8 /mar105/xwrManage.jar'
+
+
+  rocketmq-console:
+    image: mar105/ubuntu-tomcat9-jdk12:latest
+    container_name: rocketmq-console
+    ports:
+      - 8300:8080
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /Users/yanghenglin/Desktop/mar105/tools/rocketmq-externals-master/rocketmq-console/target/rocketmq-console-ng-2.0.0.jar:/mar105/rocketmq-console-ng-2.0.0.jar
+    entrypoint: /entrypoint.sh -d 192.168.3.3:9876 -c 'java -jar -Dfile.encoding=utf-8 /mar105/rocketmq-console-ng-2.0.0.jar --rocketmq.config.namesrvAddr=192.168.3.3:9876'
+
+#  redis:
+#    image: mar105/ubuntu-tomcat9-jdk12:latest
+#    container_name: redis
+#    ports:
+#      - 6379:6379
+#    restart: always
+#    environment:
+#      - TZ=Asia/Shanghai
+#    volumes:
+#      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+#      - /etc/timezone:/etc/timezone
+#      - /Users/yanghenglin/Desktop/mar105/tools/redis-5.0.4:/mar105/redis-5.0.4
+#    entrypoint: '/mar105/redis-5.0.4/src/redis-server /mar105/redis-5.0.4/redis.conf start'
 
